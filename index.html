@@ -1,69 +1,90 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Siwar Mhadhbi — Portfolio</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Business Analyst & QA portfolio: process mining, Python ML defect analytics, DORA + Monte Carlo forecasting, and Arabic RTL/bi-di QA." />
+  <script>
+  (() => {
+    const saved = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const theme = saved || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
   <script defer src="scripts.js"></script>
 </head>
 <body>
-<header class="site-header">
-  <a href="index.html" class="brand"><img src="assets/logo.svg" alt="" width="24" height="24"><span>Siwar Mhadhbi</span></a>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="case-erp-wms.html">ERP WMS</a>
-    <a href="case-dms-forecasting.html">DMS Forecast</a>
-    <a href="case-pos-qa.html">POS QA</a>
-    <a href="case-rtl-bidi.html">Arabic RTL/bi-di</a>
-    <a href="assets/Siwar_Mhadhbi_CV.pdf" target="_blank" rel="noopener">Download CV</a>
-  </nav>
-</header>
-<main class="container">
-  <section class="hero">
-    <div>
-      <h1>Business Analyst & QA Specialist</h1>
-      <p>ERP WMS • DMS • POS • SaaS | Process Mining • ML Defect Analytics • Delivery Forecasting (DORA + Monte Carlo) • Arabic RTL/bi-di QA</p>
-      <ul>
-        <li>Open to Abu Dhabi/Dubai (UAE) — requires employer-sponsored work visa</li>
-        <li>Languages: Arabic (Native), English (Fluent), French (Fluent)</li>
-      </ul>
-      <p><a class='btn' target='_blank' rel='noopener' href='assets/Siwar_Mhadhbi_CV.pdf'>Download CV</a></p>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <a class="brand" href="index.html"><span class="brand-mark">SM.</span></a>
+    <nav aria-label="Primary">
+      <a href="work.html">Work</a>
+      <a href="assets/Siwar_Mhadhbi_CV.pdf" target="_blank" rel="noopener">Resume</a>
+      <a href="#contact">Contact</a>
+      <button id="themeToggle" class="theme-switch" type="button" aria-pressed="false" aria-label="Toggle color theme" title="Toggle theme">
+      <span class="switch-track" aria-hidden="true">
+        <svg class="sun" viewBox="0 0 24 24" width="16" height="16">
+          <path fill="currentColor" d="M6.76 4.84l-1.8-1.79-1.42 1.41 1.79 1.8 1.43-1.42zM1 13h3v-2H1v2zm10-9h2V1h-2v3zm7.66 2.46l1.79-1.8-1.41-1.41-1.8 1.79 1.42 1.42zM17 13h3v-2h-3v2zM12 19a7 7 0 100-14 7 7 0 000 14zm5.24 1.16l1.8 1.79 1.41-1.41-1.79-1.8-1.42 1.42zM11 23h2v-3h-2v3zM3.34 18.66l1.8-1.79-1.42-1.42-1.79 1.8 1.41 1.41z"/>
+        </svg>
+        <svg class="moon" viewBox="0 0 24 24" width="16" height="16">
+          <path fill="currentColor" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+        <span class="thumb"></span>
+      </span>
+    </button>
+    </nav>
+  </header>
+
+  <main id="main" class="container hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Hey, I’m</p>
+      <h1 class="gradient-name">Siwar Mhadhbi</h1>
+      <p class="lead">
+        Business Analyst & QA specialist for ERP/WMS, DMS, and POS (SaaS). I blend
+        <strong>process mining</strong>, <strong>Python ML defect analytics</strong>,
+        and <strong>DORA + Monte Carlo</strong> delivery forecasting to ship predictable, high-quality releases.
+        Recent outcomes: ~25% faster release cycles, ~30% fewer defects, ~95% of issues resolved within SLA.
+      </p>
+
+      <div class="cta-row">
+        <a class="chip" href="mailto:siwarxmhadhbi@gmail.com">
+          <span class="chip-icon">✉️</span><span>Send an email</span>
+        </a>
+        <a class="chip" target="_blank" rel="noopener" href="https://www.linkedin.com/in/siwarxmhadhbi/">
+          <span class="chip-icon">in</span><span>LinkedIn</span>
+        </a>
+        <a class="chip" target="_blank" rel="noopener" href="assets/Siwar_Mhadhbi_CV.pdf">
+          <span class="chip-icon">⬇️</span><span>Download CV</span>
+        </a>
+        <a class="chip" target="_blank" rel="noopener" href="https://github.com/">
+          <span class="chip-icon">🐙</span><span>Github</span>
+        </a>
+      </div>
     </div>
-    <img src="assets/erp-wms.svg" alt="" />
+
+    <div class="hero-art">
+      <div class="glow"></div>
+    </div>
+  </main>
+
+  <section id="contact" class="container contact">
+    <div>
+      <h2>Contact</h2>
+      <p><strong>Email:</strong> <a href="mailto:siwarxmhadhbi@gmail.com">siwarxmhadhbi@gmail.com</a></p>
+      <p><strong>LinkedIn:</strong> <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/siwarxmhadhbi/">linkedin.com/in/siwarxmhadhbi</a></p>
+      <p><strong>Phone:</strong> +216 565 62196</p>
+      <p class="muted">UAE-ready • Open to Abu Dhabi/Dubai • Immediate joiner upon sponsorship</p>
+    </div>
   </section>
 
-  <section class="cards">
-    <a class="card" href="case-erp-wms.html">
-      <img src="assets/erp-wms.svg" alt="ERP WMS">
-      <h3>ERP WMS — Process Mining</h3>
-      <p>Variant and conformance checks on P2P/O2C logs to surface bottlenecks; informed backlog and release criteria.</p>
-    </a>
-    <a class="card" href="case-dms-forecasting.html">
-      <img src="assets/dms-forecast.svg" alt="DMS Forecasting">
-      <h3>DMS — Monte Carlo & DORA</h3>
-      <p>Throughput-based Monte Carlo for UAT windows tied to DORA metrics.</p>
-    </a>
-    <a class="card" href="case-pos-qa.html">
-      <img src="assets/pos-qa.svg" alt="POS QA">
-      <h3>POS — Quality & Readiness</h3>
-      <p>Tightened acceptance criteria and regression packs; NLP-lite triage for dedupe/routing.</p>
-    </a>
-    <a class="card" href="case-rtl-bidi.html">
-      <img src="assets/rtl-bidi.svg" alt="RTL/bi-di QA">
-      <h3>Arabic RTL/bi-di QA</h3>
-      <p>Embedded RTL/bi-di criteria (dir, mirroring, numerals) into specs/tests; reduced Arabic UI/layout defects.</p>
-    </a>
-  </section>
-
-  <section id="contact">
-    <h2>Contact</h2>
-    <p><strong>Email:</strong> <a href="mailto:siwarxmhadhbi@gmail.com">siwarxmhadhbi@gmail.com</a><br>
-       <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/siwarxmhadhbi/" target="_blank">linkedin.com/in/siwarxmhadhbi</a><br>
-       <strong>Phone:</strong> +216 565 62196</p>
-  </section>
-</main>
-<footer class='site-footer'><p>© 2025 Siwar Mhadhbi</p></footer>
+  <footer class="site-footer">
+    <p>© 2025 Siwar Mhadhbi · Business Analyst & QA</p>
+  </footer>
 </body>
 </html>
