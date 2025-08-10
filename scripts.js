@@ -1,4 +1,3 @@
-// scripts.js (full updated version)
 (function () {
   const STORAGE_KEY = 'theme';
   const DOC = document.documentElement;
@@ -10,8 +9,7 @@
   const getTheme = () => DOC.getAttribute('data-theme') || 'dark';
 
   const applyThemeVars = (mode) => {
-    // If you're using CSS :root + html[data-theme="light"] overrides, you can
-    // delete this function. Otherwise keep it to set vars in JS.
+    // Keep CSS vars in sync (optional if your CSS already handles html[data-theme])
     const set = (k, v) => DOC.style.setProperty(k, v);
     if (mode === 'light') {
       set('--bg', '#f8fafc'); set('--text', '#0b1220'); set('--muted', '#4b5563');
@@ -27,7 +25,6 @@
     const isDark = mode === 'dark';
     btn.setAttribute('aria-pressed', String(isDark));
     btn.title = `Switch to ${isDark ? 'light' : 'dark'} mode`;
-    // Optional: swap icon look
     btn.classList.toggle('torch-on', isDark);
   };
 
@@ -62,9 +59,58 @@
         setTheme(mode, false);
         updateToggleButton(btn, mode);
       };
-      // modern browsers
       mq.addEventListener ? mq.addEventListener('change', onChange)
                           : mq.addListener && mq.addListener(onChange);
+    }
+
+    // ----- compute --nav-h so anchor jumps account for sticky header -----
+    const navEl = document.querySelector('.nav');
+    const setNavVar = () => {
+      const h = (navEl?.offsetHeight || 64);
+      document.documentElement.style.setProperty('--nav-h', `${h}px`);
+    };
+    setNavVar();
+    window.addEventListener('resize', setNavVar);
+
+    // ----- Scroll spy: highlight active section in the primary nav -----
+    const sectionEls = document.querySelectorAll('main#home, section[id]');
+    const headerNavLinks = Array.from(document.querySelectorAll('header.nav nav a'));
+
+    // Map #id -> <a>
+    const linkById = new Map(
+      headerNavLinks
+        .filter(a => (a.getAttribute('href') || '').startsWith('#'))
+        .map(a => [a.getAttribute('href').slice(1), a])
+    );
+
+    const setActive = (id) => {
+      headerNavLinks.forEach(a => {
+        a.classList.remove('active');
+        a.removeAttribute('aria-current');
+      });
+      const link = linkById.get(id);
+      if (link) {
+        link.classList.add('active');
+        link.setAttribute('aria-current', 'page'); // accessibility: current page/section
+      }
+    };
+
+    // Observe section visibility; activate when section top enters viewport
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.target.id) {
+          setActive(entry.target.id);
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0.1 });
+
+    sectionEls.forEach(el => io.observe(el));
+
+    // If page loads with a hash, set active immediately
+    if (location.hash && linkById.has(location.hash.slice(1))) {
+      setActive(location.hash.slice(1));
+    } else {
+      setActive('home');
     }
   });
 

@@ -1,0 +1,12 @@
+case_id,activity,timestamp,resource
+SO-1001,Create Sales Order,2024-09-18T09:12:03Z,alice
+SO-1001,Release to Warehouse,2024-09-18T10:15:55Z,bot-oms
+SO-1001,Pick Items,2024-09-18T12:02:11Z,bob
+SO-1001,Pack Order,2024-09-18T13:09:44Z,carol
+SO-1001,Ship Order,2024-09-18T14:25:09Z,carrier
+SO-1002,Create Sales Order,2024-09-18T09:40:02Z,alice
+SO-1002,Release to Warehouse,2024-09-18T10:12:10Z,bot-oms
+SO-1002,Pick Items,2024-09-18T15:45:22Z,bob
+SO-1002,Exception: Re-pick,2024-09-18T16:37:49Z,qa
+SO-1002,Pack Order,2024-09-18T17:20:01Z,carol
+SO-1002,Ship Order,2024-09-18T18:05:54Z,carrier

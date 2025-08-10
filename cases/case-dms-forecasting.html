@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DMS — Monte Carlo & DORA · Siwar Mhadhbi</title>
+  <meta name="description" content="Throughput-based Monte Carlo tied to DORA metrics to predict UAT windows (P80/P95) and de-risk go-lives." />
+  <script>
+    (() => {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.setAttribute("data-theme", saved || (prefersDark ? "dark" : "light"));
+    })();
+  </script>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../../case.css" />
+  <script defer src="../../scripts.js"></script>
+  <script defer src="../../case.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="nav">
+    <a class="brand" href="../../index.html#home"><span class="brand-mark">SM.</span></a>
+    <nav aria-label="Primary">
+      <a href="../../index.html#home">Home</a>
+      <a href="../../index.html#work">Work</a>
+      <a href="../Siwar_Mhadhbi_CV.pdf" target="_blank" rel="noopener">Resume</a>
+      <a href="../../index.html#contact">Contact</a>
+      <button id="themeToggle" class="theme-switch" type="button" aria-pressed="false" aria-label="Toggle color theme" title="Toggle theme">
+        <span class="switch-track" aria-hidden="true">
+          <svg class="sun" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M6.76 4.84l-1.8-1.79-1.42 1.41 1.79 1.8 1.43-1.42zM1 13h3v-2H1v2zm10-9h2V1h-2v3zm7.66 2.46l1.79-1.8-1.41-1.41-1.8 1.79 1.42 1.42zM17 13h3v-2h-3v2zM12 19a7 7 0 100-14 7 7 0 000 14zm5.24 1.16l1.8 1.79 1.41-1.41-1.79-1.8-1.42 1.42zM11 23h2v-3h-2v3zM3.34 18.66l1.8-1.79-1.42-1.42-1.79 1.8 1.41 1.41z"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <span class="thumb"></span>
+        </span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="content" class="container case">
+    <section class="case-hero">
+      <div class="case-hero__text">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="../../index.html#home">Home</a></li>
+            <li><a href="../../index.html#work">Work</a></li>
+            <li aria-current="page">DMS — Monte Carlo & DORA</li>
+          </ol>
+        </nav>
+        <h1>DMS — Monte Carlo & DORA</h1>
+        <p class="muted">We forecast delivery windows by combining recent throughput with DORA metrics to produce P80/P95 UAT ranges.</p>
+        <ul class="meta">
+          <li><strong>Role:</strong> Business Analyst · QA</li>
+          <li><strong>Domain:</strong> DMS · SaaS</li>
+          <li><strong>Stack:</strong> Python, Jupyter, Jira/Azure Boards</li>
+          <li><strong>Timeline:</strong> 6 weeks</li>
+        </ul>
+      </div>
+      <figure class="case-hero__media">
+        <img src="../dms-forecast.svg" alt="DMS forecasting overview" data-zoom>
+      </figure>
+    </section>
+
+    <div class="case-layout">
+      <aside class="toc" aria-label="Table of contents">
+        <h2 class="toc__title">On this page</h2>
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#problem">Problem & Goals</a></li>
+          <li><a href="#approach">Approach</a></li>
+          <li><a href="#outcomes">Outcomes</a></li>
+          <li><a href="#stack">Tech & Methods</a></li>
+          <li><a href="#lessons">Lessons</a></li>
+        </ol>
+      </aside>
+
+      <article class="case-body">
+        <section id="overview" class="section">
+          <h2>Overview</h2>
+          <ul>
+            <li>Defined acceptance criteria tied to DORA signals.</li>
+            <li>Used historical throughput to simulate likely completion dates.</li>
+            <li>Published P80/P95 ranges with confidence notes in release docs.</li>
+          </ul>
+        </section>
+
+        <section id="problem" class="section">
+          <h2>Problem & Goals</h2>
+          <p>Stakeholders needed reliable date ranges instead of single bets. Confidence needed to be evidence-based and explained simply.</p>
+        </section>
+
+        <section id="approach" class="section">
+          <h2>Approach</h2>
+          <ol class="steps">
+            <li>Extracted weekly throughput from boards.</li>
+            <li>Ran 10k Monte Carlo simulations for delivery windows.</li>
+            <li>Communicated P80/P95 with visual bands and plain-language notes.</li>
+          </ol>
+        </section>
+
+        <section id="outcomes" class="section">
+          <h2>Outcomes</h2>
+          <ul class="stats">
+            <li><span class="stat__num">P80</span><span class="stat__label">UAT range within plan</span></li>
+            <li><span class="stat__num">Clear</span><span class="stat__label">Stakeholder expectations</span></li>
+            <li><span class="stat__num">Fewer</span><span class="stat__label">Scope churn debates</span></li>
+          </ul>
+        </section>
+
+        <section id="stack" class="section">
+          <h2>Tech & Methods</h2>
+          <ul class="tags"><li>Monte Carlo</li><li>DORA</li><li>Python</li><li>Analytics</li></ul>
+        </section>
+
+        <section id="lessons" class="section">
+          <h2>Lessons</h2>
+          <ul><li>Ranges + assumptions > single target date.</li></ul>
+        </section>
+
+        <p><a href="../../index.html#work">← Back to Work</a></p>
+      </article>
+    </div>
+  </main>
+
+  <dialog id="imgLightbox">
+    <button class="dialog__close" aria-label="Close">✕</button>
+    <img alt="" id="dialogImg">
+  </dialog>
+
+  <footer class="site-footer">
+    <p>© 2025 Siwar Mhadhbi · Business Analyst & QA</p>
+  </footer>
+</body>
+</html>

@@ -1,10 +1,14 @@
-
-
 /* ---- Theme variables (dark by default) ---- */
 :root{
   --bg:#0b0f14; --text:#eaf0f6; --muted:#aab6c4;
   --elev:#121821; --card:#0f141b; --border:#223044;
   --brand:#3b82f6; --accent:#a855f7; --accent2:#22c55e;
+
+  /* Nav height (JS updates this precisely) */
+  --nav-h: 64px;
+
+  /* Let native form controls adapt to theme */
+  color-scheme: light dark;
 }
 
 /* ---- Light mode overrides ---- */
@@ -22,6 +26,11 @@ a{ color:var(--text); text-decoration:none; }
 a:hover{ text-decoration:underline; }
 .muted{ color:var(--muted); }
 .container{ width:min(1120px,92%); margin:0 auto; }
+
+/* Smooth in-page scrolling + sticky offset */
+html{ scroll-behavior:smooth; /* MDN: scroll-behavior */ }
+html{ scroll-padding-top: var(--nav-h); /* MDN: scroll-padding-top */ }
+section[id], main#home{ scroll-margin-top: calc(var(--nav-h) + 12px); /* MDN: scroll-margin-top */ }
 
 /* Accessibility skip link */
 .skip-link{ position:absolute; left:-9999px; top:auto; }
@@ -142,4 +151,19 @@ html, body, .nav, .theme-switch, .switch-track, .switch-track .thumb {
 /* When DARK, move the thumb to the right */
 html[data-theme="dark"] .theme-switch .thumb{
   transform: translateX(calc(var(--sw-w) - var(--sw-h)));
+}
+
+/* Keyboard focus rings (accessibility) */
+.nav nav a:focus-visible,
+.card:focus-visible,
+.chip:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }

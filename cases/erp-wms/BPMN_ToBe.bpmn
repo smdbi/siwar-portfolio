@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             id="Defs_O2C_ToBe" targetNamespace="http://example.com/bpmn">
+  <process id="O2C_ToBe" name="Order-to-Cash (To-Be)" isExecutable="false">
+    <startEvent id="start" name="Order Created"/>
+    <sequenceFlow id="f1" sourceRef="start" targetRef="rel"/>
+    <task id="rel" name="Release to Warehouse"/>
+    <sequenceFlow id="f2" sourceRef="rel" targetRef="pick"/>
+    <task id="pick" name="Pick Items"/>
+    <sequenceFlow id="f3" sourceRef="pick" targetRef="pack"/>
+    <task id="pack" name="Pack Order"/>
+    <sequenceFlow id="f4" sourceRef="pack" targetRef="ship"/>
+    <task id="ship" name="Ship Order"/>
+    <sequenceFlow id="f5" sourceRef="ship" targetRef="end"/>
+    <endEvent id="end" name="In Transit"/>
+  </process>
+</definitions>
