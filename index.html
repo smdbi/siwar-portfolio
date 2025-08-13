@@ -22,52 +22,128 @@
 <body>
   <a class="skip-link" href="#home">Skip to content</a>
 
+  <!-- NAV -->
   <header class="nav">
-    <a class="brand" href="#home"><span class="brand-mark">SM.</span></a>
-    <nav aria-label="Primary">
-      <a href="#home">Home</a>
-      <a href="#work">Work</a>
-      <a href="assets/Siwar_Mhadhbi_CV.pdf" target="_blank" rel="noopener">Resume</a>
-      <a href="#contact">Contact</a>
-      <button id="themeToggle" class="theme-switch" type="button" aria-pressed="false" aria-label="Toggle color theme" title="Toggle theme">
-        <span class="switch-track" aria-hidden="true">
-          <svg class="sun" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M6.76 4.84l-1.8-1.79-1.42 1.41 1.79 1.8 1.43-1.42zM1 13h3v-2H1v2zm10-9h2V1h-2v3zm7.66 2.46l1.79-1.8-1.41-1.41-1.8 1.79 1.42 1.42zM17 13h3v-2h-3v2zM12 19a7 7 0 100-14 7 7 0 000 14zm5.24 1.16l1.8 1.79 1.41-1.41-1.79-1.8-1.42 1.42zM11 23h2v-3h-2v3zM3.34 18.66l1.8-1.79-1.42-1.42-1.79 1.8 1.41 1.41z"/></svg>
-          <svg class="moon" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-          <span class="thumb"></span>
-        </span>
-      </button>
-    </nav>
+    <div class="nav-inner container">
+      <nav class="nav-left" aria-label="Primary">
+        <a class="nav-link" href="#home" data-link>Home</a>
+        <a class="nav-link" href="#about" data-link><span class="num">01.</span> About</a>
+        <a class="nav-link" href="#experience" data-link><span class="num">02.</span> Experience</a>
+        <a class="nav-link" href="#work" data-link><span class="num">03.</span> Projects</a>
+        <a class="nav-link" href="#contact" data-link><span class="num">04.</span> Contact</a>
+      </nav>
+
+      <nav class="nav-right" aria-label="Social & theme">
+        <a class="icon-link" href="mailto:siwarxmhadhbi@gmail.com" title="Email" aria-label="Email">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path fill="currentColor" d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/>
+          </svg>
+        </a>
+        <a class="icon-link" href="https://github.com/" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61a3.18 3.18 0 0 0-1.34-1.76c-1.1-.75.08-.73.08-.73a2.52 2.52 0 0 1 1.84 1.24 2.56 2.56 0 0 0 3.5 1 2.55 2.55 0 0 1 .76-1.6c-2.66-.3-5.47-1.33-5.47-5.93A4.64 4.64 0 0 1 6 6.42a4.3 4.3 0 0 1 .12-3.18s1-.31 3.26 1.18a11.2 11.2 0 0 1 5.93 0c2.26-1.49 3.26-1.18 3.26-1.18a4.3 4.3 0 0 1 .12 3.18 4.64 4.64 0 0 1 1.23 3.22c0 4.62-2.81 5.62-5.49 5.92a2.85 2.85 0 0 1 .82 2.21v3.28c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/>
+          </svg>
+        </a>
+        <a class="icon-link" href="https://www.linkedin.com/in/siwarxmhadhbi/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4zM8 8h3.8v2.05h.05c.53-1 1.84-2.05 3.8-2.05C20.1 8 23 10.42 23 15.08V23h-4v-6.91c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.66V23h-4z"/>
+          </svg>
+        </a>
+
+        <button id="themeToggle" class="theme-switch" type="button"
+        aria-pressed="false" aria-label="Toggle color theme" title="Toggle theme">
+          <span class="switch-track" aria-hidden="true">
+            <svg class="sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path fill="currentColor" d="M6.76 4.84l-1.8-1.79-1.42 1.41 1.79 1.8 1.43-1.42zM1 13h3v-2H1v2zm10-9h2V1h-2v3zm7.66 2.46l1.79-1.8-1.41-1.41-1.8 1.79 1.42 1.42zM17 13h3v-2h-3v2zM12 19a7 7 0 100-14 7 7 0 000 14zm5.24 1.16l1.8 1.79 1.41-1.41-1.79-1.8-1.42 1.42zM11 23h2v-3h-2v3zM3.34 18.66l1.8-1.79-1.42-1.42-1.79 1.8 1.41 1.41z"/>
+            </svg>
+            <svg class="moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path fill="currentColor" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+            </svg>
+            <span class="thumb"></span>
+          </span>
+        </button>
+
+      </nav>
+    </div>
   </header>
 
-  <!-- HOME -->
+  <!-- HERO -->
   <main id="home" class="container hero">
-    <div class="hero-copy">
+    <div class="hero-copy" data-reveal="up">
       <p class="eyebrow">Hey, I’m</p>
       <h1 class="gradient-name">Siwar Mhadhbi</h1>
-      <p class="lead">
+      <!-- <p class="lead">
         Business Analyst & QA specialist for ERP/WMS, DMS, and POS (SaaS). I blend
         <strong>process mining</strong>, <strong>Python ML defect analytics</strong>,
         and <strong>DORA + Monte Carlo</strong> delivery forecasting to ship predictable, high-quality releases.
         Recent outcomes: ~25% faster release cycles, ~30% fewer defects, ~95% of issues resolved within SLA.
-      </p>
+      </p> -->
 
-      <div class="cta-row">
+      <!-- <div class="cta-row">
         <a class="chip" href="mailto:siwarxmhadhbi@gmail.com"><span class="chip-icon">✉️</span><span>Send an email</span></a>
         <a class="chip" target="_blank" rel="noopener" href="https://www.linkedin.com/in/siwarxmhadhbi/"><span class="chip-icon">in</span><span>LinkedIn</span></a>
         <a class="chip" target="_blank" rel="noopener" href="assets/Siwar_Mhadhbi_CV.pdf"><span class="chip-icon">⬇️</span><span>Download CV</span></a>
         <a class="chip" target="_blank" rel="noopener" href="https://github.com/"><span class="chip-icon">🐙</span><span>Github</span></a>
-      </div>
+      </div> -->
     </div>
-    <div class="hero-art"><div class="glow"></div></div>
+    <!-- <div class="hero-art" aria-hidden="true"><div class="glow"></div></div> -->
   </main>
 
-  <!-- WORK -->
-  <section id="work" class="container work">
-    <h1>Selected Work</h1>
-    <p class="muted">Redacted artifacts with synthetic data; full materials available during interviews.</p>
+  <!-- ABOUT -->
+  <section id="about" class="section container">
+    <h3 class="section-title" data-reveal="fade"><span class="num">01.</span> About</h3>
+    <p data-reveal="up">
+      Business Analyst & QA specialist for ERP/WMS, DMS, and POS (SaaS). I blend
+      <strong>process mining</strong>, <strong>Python ML defect analytics</strong>,
+      and <strong>DORA + Monte Carlo</strong> delivery forecasting to ship predictable, high-quality releases.
+      Recent outcomes: ~25% faster release cycles, ~30% fewer defects, ~95% of issues resolved within SLA.
+    </p>
+    
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section container">
+    <h3 class="section-title" data-reveal="fade"><span class="num">02.</span> Experience</h3>
+
+    <ol class="timeline" aria-label="Experience timeline">
+      <li class="tl-item" data-reveal="right">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <header>
+            <h4>Business Analyst · ERP/WMS</h4>
+            <span class="meta">2023–2025 · SaaS</span>
+          </header>
+          <ul>
+            <li>BPMN as-is/to-be; acceptance criteria & RTM.</li>
+            <li>Process mining on P2P/O2C logs: variants & conformance.</li>
+            <li>DORA + Monte Carlo forecasting (P80/P95).</li>
+          </ul>
+          <a class="text-link" href="cases/case-erp-wms.html">Case study →</a>
+        </div>
+      </li>
+      <li class="tl-item" data-reveal="right" data-reveal-delay="100">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <header>
+            <h4>POS QA & Readiness</h4>
+            <span class="meta">2022–2023 · Retail</span>
+          </header>
+          <ul>
+            <li>Regression packs; RTL/i18n checks; NLP-lite triage.</li>
+          </ul>
+          <a class="text-link" href="cases/case-pos-qa.html">Case study →</a>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="work" class="section container work">
+    <h3 class="section-title" data-reveal="fade"><span class="num">03.</span> Projects</h3>
+    <p class="muted" data-reveal="fade">Redacted artifacts with synthetic data; full materials available during interviews.</p>
 
     <div class="grid">
-      <a class="card" href="cases/case-erp-wms.html">
+      <a class="card" href="cases/case-erp-wms.html" data-reveal="up">
         <img src="assets/erp-wms.svg" alt="ERP WMS — Process Mining" />
         <div class="card-body">
           <h3>ERP WMS — Process Mining</h3>
@@ -76,7 +152,7 @@
         </div>
       </a>
 
-      <a class="card" href="cases/case-dms-forecasting.html">
+      <a class="card" href="cases/case-dms-forecasting.html" data-reveal="up" data-reveal-delay="120">
         <img src="assets/dms-forecast.svg" alt="DMS — Monte Carlo & DORA" />
         <div class="card-body">
           <h3>DMS — Monte Carlo & DORA</h3>
@@ -85,7 +161,7 @@
         </div>
       </a>
 
-      <a class="card" href="cases/case-pos-qa.html">
+      <a class="card" href="cases/case-pos-qa.html" data-reveal="up" data-reveal-delay="180">
         <img src="assets/pos-qa.svg" alt="POS — Quality & Readiness" />
         <div class="card-body">
           <h3>POS — Quality & Readiness</h3>
@@ -94,7 +170,7 @@
         </div>
       </a>
 
-      <a class="card" href="cases/case-rtl-bidi.html">
+      <a class="card" href="cases/case-rtl-bidi.html" data-reveal="up" data-reveal-delay="220">
         <img src="assets/rtl-bidi.svg" alt="Arabic RTL/bi-di QA" />
         <div class="card-body">
           <h3>Arabic RTL/bi-di QA</h3>
@@ -106,18 +182,16 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="container contact">
-    <div>
-      <h2>Contact</h2>
-      <p><strong>Email:</strong> <a href="mailto:siwarxmhadhbi@gmail.com">siwarxmhadhbi@gmail.com</a></p>
-      <p><strong>LinkedIn:</strong> <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/siwarxmhadhbi/">linkedin.com/in/siwarxmhadhbi</a></p>
-      <p><strong>Phone:</strong> +216 565 62196</p>
-      <p class="muted">UAE-ready • Open to Abu Dhabi/Dubai • Immediate joiner upon sponsorship</p>
-    </div>
+  <section id="contact" class="section container contact">
+    <h3 class="section-title" data-reveal="fade"><span class="num">04.</span> Contact</h3>
+    <p data-reveal="up"><strong>Email:</strong> <a href="mailto:siwarxmhadhbi@gmail.com">siwarxmhadhbi@gmail.com</a></p>
+    <p data-reveal="up" data-reveal-delay="100"><strong>LinkedIn:</strong> <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/siwarxmhadhbi/">linkedin.com/in/siwarxmhadhbi</a></p>
+    <p data-reveal="up" data-reveal-delay="140"><strong>Phone:</strong> +216 565 62196</p>
+    <p class="muted" data-reveal="fade">UAE-ready • Open to Abu Dhabi/Dubai • Immediate joiner upon sponsorship</p>
   </section>
 
   <footer class="site-footer">
-    <p>© 2025 Siwar Mhadhbi · Business Analyst & QA</p>
+    <p>Built and designed by Siwar Mhadhbi. All rights reserved. © <span id="year"></span></p>
   </footer>
 </body>
 </html>

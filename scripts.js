@@ -1,120 +1,154 @@
+// Theme toggle, active-link (scroll-spy), reveal-on-scroll, smooth anchors, sticky offset calc
 (function () {
   const STORAGE_KEY = 'theme';
   const DOC = document.documentElement;
+  const btn = document.getElementById('themeToggle');
 
-  // ---- helpers ----
-  const prefersDark = () =>
-    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  // Prefer OS if the user hasn't chosen yet
+  const mql = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
-  const getTheme = () => DOC.getAttribute('data-theme') || 'dark';
+  function getSaved() { return localStorage.getItem(STORAGE_KEY); }
+  function setSaved(v) { localStorage.setItem(STORAGE_KEY, v); }
 
-  const applyThemeVars = (mode) => {
-    // Keep CSS vars in sync (optional if your CSS already handles html[data-theme])
-    const set = (k, v) => DOC.style.setProperty(k, v);
-    if (mode === 'light') {
-      set('--bg', '#f8fafc'); set('--text', '#0b1220'); set('--muted', '#4b5563');
-      set('--elev', '#ffffff'); set('--card', '#f1f5f9'); set('--border', '#e2e8f0');
-    } else {
-      set('--bg', '#0b0f14'); set('--text', '#eaf0f6'); set('--muted', '#aab6c4');
-      set('--elev', '#121821'); set('--card', '#0f141b'); set('--border', '#223044');
-    }
-  };
-
-  const updateToggleButton = (btn, mode) => {
-    if (!btn) return;
-    const isDark = mode === 'dark';
-    btn.setAttribute('aria-pressed', String(isDark));
-    btn.title = `Switch to ${isDark ? 'light' : 'dark'} mode`;
-    btn.classList.toggle('torch-on', isDark);
-  };
-
-  const setTheme = (mode, persist = true) => {
+  function applyTheme(mode) {
     DOC.setAttribute('data-theme', mode);
-    applyThemeVars(mode);
-    if (persist) localStorage.setItem(STORAGE_KEY, mode);
-  };
-
-  // ---- init ----
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('themeToggle');
-
-    // initial mode: saved -> OS preference -> dark
-    const saved = localStorage.getItem(STORAGE_KEY);
-    const initial = saved || (prefersDark() ? 'dark' : 'light');
-    setTheme(initial, Boolean(saved));
-    updateToggleButton(btn, initial);
-
-    // toggle click
-    btn && btn.addEventListener('click', () => {
-      const next = getTheme() === 'dark' ? 'light' : 'dark';
-      setTheme(next, true);
-      updateToggleButton(btn, next);
-    });
-
-    // follow OS changes only if user hasn't chosen manually
-    if (!saved && window.matchMedia) {
-      const mq = window.matchMedia('(prefers-color-scheme: dark)');
-      const onChange = (e) => {
-        const mode = e.matches ? 'dark' : 'light';
-        setTheme(mode, false);
-        updateToggleButton(btn, mode);
-      };
-      mq.addEventListener ? mq.addEventListener('change', onChange)
-                          : mq.addListener && mq.addListener(onChange);
+    if (btn) {
+      btn.setAttribute('aria-pressed', String(mode === 'dark'));
+      btn.title = `Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`;
     }
+  }
 
-    // ----- compute --nav-h so anchor jumps account for sticky header -----
+  function currentTheme() {
+    return DOC.getAttribute('data-theme') || 'dark';
+  }
+
+  function initTheme() {
+    const saved = getSaved();
+    if (saved === 'light' || saved === 'dark') {
+      applyTheme(saved);
+      return;
+    }
+    const osDark = mql ? mql.matches : true;
+    applyTheme(osDark ? 'dark' : 'light');
+  }
+
+  function initSmoothAnchorsAndFocus() {
+    // Smooth scroll + move focus to target for a11y
+    document.querySelectorAll('a[data-link]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href') || '';
+        if (!href.startsWith('#')) return;
+        const target = document.querySelector(href);
+        if (!target) return;
+
+        e.preventDefault();
+        // Make sure the target can be focused programmatically
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Move focus after the scroll to help keyboard/screen reader users
+        setTimeout(() => target.focus({ preventScroll: true }), 300);
+        history.replaceState(null, '', href); // keep URL hash in sync
+      });
+    });
+  }
+
+  function initStickyOffsetVar() {
     const navEl = document.querySelector('.nav');
     const setNavVar = () => {
       const h = (navEl?.offsetHeight || 64);
-      document.documentElement.style.setProperty('--nav-h', `${h}px`);
+      DOC.style.setProperty('--nav-h', `${h}px`);
     };
     setNavVar();
     window.addEventListener('resize', setNavVar);
+  }
 
-    // ----- Scroll spy: highlight active section in the primary nav -----
-    const sectionEls = document.querySelectorAll('main#home, section[id]');
-    const headerNavLinks = Array.from(document.querySelectorAll('header.nav nav a'));
+  function initScrollSpy() {
+    const links = Array.from(document.querySelectorAll('.nav-left a[data-link]'));
+    const linkByHash = new Map(links.map(a => [a.getAttribute('href'), a]));
+    const ids = ['#home', '#about', '#experience', '#work', '#contact'];
 
-    // Map #id -> <a>
-    const linkById = new Map(
-      headerNavLinks
-        .filter(a => (a.getAttribute('href') || '').startsWith('#'))
-        .map(a => [a.getAttribute('href').slice(1), a])
-    );
-
-    const setActive = (id) => {
-      headerNavLinks.forEach(a => {
-        a.classList.remove('active');
-        a.removeAttribute('aria-current');
-      });
-      const link = linkById.get(id);
-      if (link) {
-        link.classList.add('active');
-        link.setAttribute('aria-current', 'page'); // accessibility: current page/section
-      }
+    const setActive = (hash) => {
+      links.forEach(l => l.classList.remove('is-active'));
+      const el = linkByHash.get(hash);
+      if (el) el.classList.add('is-active');
     };
 
-    // Observe section visibility; activate when section top enters viewport
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.target.id) {
-          setActive(entry.target.id);
+    // IntersectionObserver for sections
+    if ('IntersectionObserver' in window) {
+      const spy = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActive('#' + entry.target.id);
+        });
+      }, { root: null, rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+
+      ids.forEach(h => {
+        const el = document.querySelector(h);
+        if (el) spy.observe(el);
+      });
+    }
+
+    // Set initial active state on load (before IO fires)
+    const initial = (location.hash && ids.includes(location.hash)) ? location.hash : '#home';
+    setActive(initial);
+
+    // Also respond to manual hash changes (e.g., user edits URL)
+    window.addEventListener('hashchange', () => {
+      const h = (location.hash && ids.includes(location.hash)) ? location.hash : '#home';
+      setActive(h);
+    });
+  }
+
+  function initRevealOnScroll() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nodes = document.querySelectorAll('[data-reveal]');
+
+    // Reduced motion or no IO support → reveal immediately
+    if (reduce || !('IntersectionObserver' in window)) {
+      nodes.forEach(el => el.classList.add('is-in'));
+      return;
+    }
+
+    const ro = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          ro.unobserve(e.target);
         }
       });
-    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0.1 });
+    }, { threshold: 0.08, rootMargin: '0px 0px -10% 0px' });
 
-    sectionEls.forEach(el => io.observe(el));
+    nodes.forEach(el => ro.observe(el));
 
-    // If page loads with a hash, set active immediately
-    if (location.hash && linkById.has(location.hash.slice(1))) {
-      setActive(location.hash.slice(1));
-    } else {
-      setActive('home');
+    // Optional: re-run once after layout settles (images, fonts)
+    setTimeout(() => {
+      document.querySelectorAll('[data-reveal]:not(.is-in)').forEach(el => ro.observe(el));
+    }, 300);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Theme
+    initTheme();
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        setSaved(next);
+      });
     }
-  });
+    if (mql) {
+      const onChange = (e) => { if (!getSaved()) applyTheme(e.matches ? 'dark' : 'light'); };
+      if (mql.addEventListener) mql.addEventListener('change', onChange);
+      else if (mql.addListener) mql.addListener(onChange);
+    }
 
-  // keep CSS vars in sync if someone changes data-theme elsewhere
-  new MutationObserver(() => applyThemeVars(getTheme()))
-    .observe(DOC, { attributes: true, attributeFilter: ['data-theme'] });
+    // Layout + interactions
+    initStickyOffsetVar();
+    initSmoothAnchorsAndFocus();
+    initScrollSpy();
+    initRevealOnScroll();
+
+    // Footer year
+    const y = document.getElementById('year');
+    if (y) y.textContent = new Date().getFullYear();
+  });
 })();
