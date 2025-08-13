@@ -291,3 +291,11 @@ html, body, .nav, .theme-switch, .switch-track, .switch-track .thumb {
 @media (prefers-reduced-motion: reduce){
   * { animation: none !important; transition: none !important; }
 } */
+
+
+.hero-3d{
+  height:450px;
+  background:#222831;
+  border-radius:16px;
+  overflow:hidden;
+}
