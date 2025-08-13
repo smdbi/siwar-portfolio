@@ -2,39 +2,52 @@
    THEME 
    ========================================= */
 :root{
-  /*  palette */
-  --deep:#2d3b37af;   /* base deep green */
-  --sage:#A6B28B;   /* accent */
-  --peach:#F5C9B0;  /* accent 2 */
-  --paper:#F9F6F3;  /* light surface */
+  /* Base palette */
+  --coal:#222831;     /* deep charcoal */
+  --slate:#393E46;    /* cool slate */
+  --taupe:#948979;    /* desaturated warm accent */
+  --sand:#DFD0B8;     /* parchment accent / light bg */
 
-  /* Dark mode */
-  --bg: var(--deep);      /* page, nav, footer unified */
-  --text:#EEF5F1;
-  --muted:#BFD0C9;
-  --elev:#283b35;         /* raised */
-  --card:#23302c;         /* deeper */
-  --border:#2F5246;
+  /* Dark surfaces & text */
+  --bg: var(--coal);                                  /* page, nav, footer unified */
+  --text:#ECEFF3;                                     /* near-white ink */
+  --muted: color-mix(in srgb, var(--sand) 55%, var(--text) 45%);
+  --elev: color-mix(in srgb, var(--slate) 70%, var(--coal) 30%); /* raised panels */
+  --card: color-mix(in srgb, var(--coal) 70%, black 30%);        /* deeper panels */
+  --border: color-mix(in srgb, var(--slate) 65%, white 35%);
 
-  --accent: var(--sage);
-  --accent2: var(--peach);
+  /* Accents */
+  --accent: var(--sand);   /* warm highlight */
+  --accent2: var(--taupe); /* secondary warm */
 
-  --nav-h:64px;
+  /* Layout */
+  --nav-h: 64px;
+
+  /* Let form controls adapt */
   color-scheme: light dark;
 }
 
-/* Light mode */
 html[data-theme="light"]{
-  --bg: var(--paper);
-  --text: var(--deep);
-  --muted:#5E6D67;
-  --elev:#FFFFFF;
-  --card:#FFFDFB;
-  --border:#E3DED9;
+  --bg: var(--sand);            /* parchment paper */
+  --text: var(--coal);          /* deep ink */
+  --muted: color-mix(in srgb, var(--coal) 55%, var(--bg) 45%);
+  --elev:#FFFFFF;               /* cards/panels */
+  --card:#FBF7F0;               /* soft off-white card */
+  --border:#D8CCBA;             /* gentle divider */
 
-  --accent: var(--deep);
-  --accent2: var(--peach);
+  --accent: var(--coal);        /* flip accent to deep ink for contrast */
+  --accent2: var(--taupe);      /* keep warm secondary */
 }
+/* Themed scrollbars (fallbacks handled automatically) */
+* { scrollbar-width: thin; scrollbar-color: var(--accent2) color-mix(in srgb, var(--bg) 85%, black 15%); }
+*::-webkit-scrollbar{ width:10px; height:10px; }
+*::-webkit-scrollbar-track{ background: color-mix(in srgb, var(--bg) 85%, black 15%); }
+*::-webkit-scrollbar-thumb{
+  background: var(--accent2);
+  border-radius: 6px;
+  border: 2px solid color-mix(in srgb, var(--bg) 85%, black 15%);
+}
+
 
 /* ---- Base / globals ---- */
 *{ box-sizing:border-box; }
