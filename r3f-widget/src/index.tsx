@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import type { Root } from "react-dom/client";
-import SeaweedDataGarden from "./SeaweedDataGarden";
+import SeaweedDataGarden from "./Data-widget";
 
 type Props = {
   height?: number;
