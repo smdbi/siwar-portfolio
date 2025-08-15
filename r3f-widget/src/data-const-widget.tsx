@@ -73,9 +73,9 @@ function ShadowDisk({ y = -0.85, scale = 3.0 }: { y?: number; scale?: number }) 
 }
 
 /* ---------------- constellation ---------------- */
-const NODE_COLOR = "#FFF6E6";
+const NODE_COLOR = "#ffe2b0ff";
 const LINK_COLOR = "#F4F6F9";
-const ORBIT_COLOR = "#FFF1DE";
+const ORBIT_COLOR = "#ffdcabff";
 
 function Constellation({ count = 38, radius = 1.55, neighbors = 2, groupRef }:{
   count?: number; radius?: number; neighbors?: number; groupRef: React.MutableRefObject<THREE.Group|null>;
