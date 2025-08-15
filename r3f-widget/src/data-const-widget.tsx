@@ -9,16 +9,16 @@ const USE_GLOW = false;        // set true to re-enable Bloom later
 const USE_SHADOW = true;       // set false to remove the ground shadow
 
 /* ---------- read your site's CSS background so it matches exactly ---------- */
-function useSiteBg(fallback = "#20262c") {
-  const [bg, setBg] = React.useState<string>(fallback);
-  React.useLayoutEffect(() => {
-    const root = document.documentElement;
-    const varBg = getComputedStyle(root).getPropertyValue("--bg").trim();
-    const bodyBg = getComputedStyle(document.body).backgroundColor;
-    setBg(varBg || bodyBg || fallback);
-  }, [fallback]);
-  return bg;
-}
+// function useSiteBg(fallback = "#20262c") {
+//   const [bg, setBg] = React.useState<string>(fallback);
+//   React.useLayoutEffect(() => {
+//     const root = document.documentElement;
+//     const varBg = getComputedStyle(root).getPropertyValue("--bg").trim();
+//     const bodyBg = getComputedStyle(document.body).backgroundColor;
+//     setBg(varBg || bodyBg || fallback);
+//   }, [fallback]);
+//   return bg;
+// }
 
 /* ---------------- helpers ---------------- */
 function fibSphere(count: number, r: number) {
@@ -166,23 +166,23 @@ function Scene() {
 
 /* ---------------- export ---------------- */
 export default function SeaweedDataGarden({ height = 520, dpr = [1,2] }:{height?:number; dpr?:[number,number]|number;}) {
-  const pageBg = useSiteBg("#20262c"); // reads --bg (or body), matches your CSS exactly
+  //const pageBg = useSiteBg("#20262c"); // reads --bg (or body), matches your CSS exactly
   return (
-    <div style={{ width:"100%", height, background: pageBg }}>
+    <div style={{ width:"100%", height }}>
       <Canvas
         dpr={dpr}
         shadows
-        gl={{ alpha: false, antialias: true }}       // opaque buffer (no CSS blending)
+        gl={{ alpha: true, antialias: true }}       // opaque buffer (no CSS blending)
         onCreated={({ gl }) => {
           gl.outputColorSpace = THREE.SRGBColorSpace; // color-correct output
           gl.toneMapping = THREE.NoToneMapping;       // keep flat colors exact
-          gl.setClearColor(new THREE.Color(pageBg), 1);
+          // gl.setClearColor(new THREE.Color(pageBg), 1);
         }}
         camera={{ fov: 38, near: 0.1, far: 100 }}
         style={{ width:"100%", height:"100%", display:"block" }}
       >
         {/* solid background drawn by WebGL (matches CSS variable) */}
-        <color attach="background" args={[pageBg]} />
+        {/* <color attach="background" args={[pageBg]} /> */}
         <Scene />
 
         {/* Optional: turn glow back on by setting USE_GLOW = true above */}
