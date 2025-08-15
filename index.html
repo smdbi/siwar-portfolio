@@ -70,7 +70,7 @@
   <!-- HERO -->
   <main id="home" class="container hero">
     <div class="hero-copy" data-reveal="up">
-      <div id="seaweed" style="width:100%; width:580px;height:500px;margin:0 auto;"></div>
+      <div id="seaweed" style="width:100%; width:600px;height:500px;margin:0 auto;"></div>
       <p class="eyebrow">Hey, I’m</p>
       <h1 class="gradient-name">Siwar Mhadhbi</h1>
       <!-- <p class="lead">
@@ -198,15 +198,51 @@
 
 
 
+<!-- keep these lightweight polyfills -->
 <script>
   window.process = window.process || { env: { NODE_ENV: 'production' } };
   window.global  = window.global  || window;
 </script>
 
+<!-- mount AFTER the DOM exists -->
 <script type="module">
-  import { mountSeaweed } from "./r3f-widget/dist/seaweed-widget.js"; // no query string needed
-  mountSeaweed(document.getElementById("seaweed"), { height: 440 });
+  import { mountSeaweed } from "./r3f-widget/dist/seaweed-widget.js";
+
+  function boot() {
+    // try hero-3d first, then seaweed (handy while testing)
+    const host =
+      document.getElementById("hero-3d") ||
+      document.getElementById("seaweed");
+
+    if (!host) {
+      console.error("Seaweed host not found (#hero-3d or #seaweed).");
+      return;
+    }
+
+    const bg =
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--bg")
+        .trim() || "#222831";
+
+    console.log("Mounting Seaweed into:", host.id, "bg:", bg);
+    mountSeaweed(host, {
+      height: 550,
+      // NOTE: your current widget build only reads `height` (it ignores background/scale/camera),
+      // so it's fine to pass them, but they won't change anything until you wire them in.
+      background: bg,
+      scale: 0.82,
+      offsetY: -0.06,
+      camera: { position: [3.8, 2.1, 3.8], fov: 48 },
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 </script>
+
 
 
 

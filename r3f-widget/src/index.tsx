@@ -1,21 +1,26 @@
-// r3f-widget/src/index.tsx
-import React from "react";
 import { createRoot } from "react-dom/client";
+import type { Root } from "react-dom/client";
 import SeaweedDataGarden from "./data-const-widget";
 
-export type SeaweedProps = React.ComponentProps<typeof SeaweedDataGarden>;
-export const __sdgVersion = "2.0.0";
+type Props = {
+  height?: number;
+  rounded?: boolean;
+  background?: string;
+  scale?: number;
+  offsetY?: number;
+  camera?: { position?: [number, number, number]; fov?: number };
+};
 
-export function mountSeaweed(
-  el: HTMLElement,
-  props: Partial<SeaweedProps> = {}
-) {
+const roots = new WeakMap<Element, Root>();
+
+export function mountSeaweed(el: HTMLElement, props: Props = {}) {
   const root = createRoot(el);
-  (el as any).__sdgRoot = root;
+  roots.set(el, root);
   root.render(<SeaweedDataGarden {...props} />);
 }
 
 export function unmountSeaweed(el: HTMLElement) {
-  const root = (el as any).__sdgRoot as import("react-dom/client").Root | undefined;
+  const root = roots.get(el);
   root?.unmount();
+  roots.delete(el);
 }

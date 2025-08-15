@@ -1,0 +1,9 @@
+[build]
+  # Build your widget inside its subfolder so dist/seaweed-widget.js exists
+  command = "npm --prefix r3f-widget ci && npm --prefix r3f-widget run build"
+
+  # Publish the repository root (index.html, assets/, r3f-widget/dist/…)
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "20"
