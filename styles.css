@@ -3,7 +3,7 @@
    ========================================= */
 :root{
   /* Base palette */
-  --coal:#222831;     /* deep charcoal */
+  --coal:#20262c;     /* deep charcoal */
   --slate:#393E46;    /* cool slate */
   --taupe:#948979;    /* desaturated warm accent */
   --sand:#DFD0B8;     /* parchment accent / light bg */
@@ -293,9 +293,3 @@ html, body, .nav, .theme-switch, .switch-track, .switch-track .thumb {
 } */
 
 
-.hero-3d{
-  height:450px;
-  background:#222831;
-  border-radius:16px;
-  overflow:hidden;
-}

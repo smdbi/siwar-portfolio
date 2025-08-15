@@ -70,7 +70,9 @@
   <!-- HERO -->
   <main id="home" class="container hero">
     <div class="hero-copy" data-reveal="up">
-      <div id="seaweed-widget" style="width: 100%; max-width: 900px; margin: 0 auto;"></div>
+      <div id="seaweed" style="width:100%; width:580px;height:520px;margin:0 auto;"></div>
+
+
       <br><br><br>
       <p class="eyebrow">Hey, I’m</p>
       <h1 class="gradient-name">Siwar Mhadhbi</h1>
@@ -197,15 +199,9 @@
   </footer> 
   
 
-
 <script type="module">
   import { mountSeaweed } from "./r3f-widget/dist/seaweed-widget.js";
-  const el = document.getElementById("seaweed-widget");
-  mountSeaweed(el, {
-    height: 450, // tweakable
-    rounded: true,
-    // You can also pass: background, scale, offsetY, camera, showLiveBadge, caption
-  });
+  mountSeaweed(document.getElementById("seaweed"), { height: 520 });
 </script>
 
 
