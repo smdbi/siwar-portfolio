@@ -6,8 +6,8 @@
   <title>Siwar Mhadhbi — Portfolio</title>
   <meta name="description" content="Business Analyst & QA portfolio: process mining, Python ML defect analytics, DORA + Monte Carlo forecasting, and Arabic RTL/bi-di QA." />
 
-  <!-- Set theme early to avoid flash -->
-  <script>
+  <!-- THEME -->
+<script>
     (() => {
       const saved = localStorage.getItem("theme");
       const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -15,7 +15,10 @@
     })();
   </script>
 
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <!-- <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" /> -->
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+
+  
   <link rel="stylesheet" href="styles.css" />
   <script defer src="scripts.js"></script>
 </head>
@@ -71,72 +74,142 @@
   <main id="home" class="container hero">
     <div class="hero-copy" data-reveal="up">
       <div id="seaweed" style="width:100%; width:600px;height:400px;margin:0 auto;"></div>
-      <p class="eyebrow">Hey, I’m</p>
-      <h1 class="gradient-name">Siwar Mhadhbi</h1>
-      <!-- <p class="lead">
-        Business Analyst & QA specialist for ERP/WMS, DMS, and POS (SaaS). I blend
-        <strong>process mining</strong>, <strong>Python ML defect analytics</strong>,
-        and <strong>DORA + Monte Carlo</strong> delivery forecasting to ship predictable, high-quality releases.
-        Recent outcomes: ~25% faster release cycles, ~30% fewer defects, ~95% of issues resolved within SLA.
-      </p> -->
+        <h1 class="gradient-name hero-title">
+          hi, i'm siwar.<span class="cursor" aria-hidden="true"></span>
+        </h1>
 
-      <!-- <div class="cta-row">
-        <a class="chip" href="mailto:siwarxmhadhbi@gmail.com"><span class="chip-icon">✉️</span><span>Send an email</span></a>
-        <a class="chip" target="_blank" rel="noopener" href="https://www.linkedin.com/in/siwarxmhadhbi/"><span class="chip-icon">in</span><span>LinkedIn</span></a>
-        <a class="chip" target="_blank" rel="noopener" href="assets/Siwar_Mhadhbi_CV.pdf"><span class="chip-icon">⬇️</span><span>Download CV</span></a>
-        <a class="chip" target="_blank" rel="noopener" href="https://github.com/"><span class="chip-icon">🐙</span><span>Github</span></a>
-      </div> -->
+        <h2 class="hero-tagline">I translate business into software.</h2>
+
+
+        <p class="hero-blurb">
+          I’m a Business Analyst & QA from Tunisia. I turn messy requirements into
+          predictable, high-quality releases using process mining, data, and tight acceptance criteria.
+        </p>
+
+        <a class="cta-btn" href="mailto:siwarxmhadhbi@gmail.com" aria-label="Send me an email">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 3.5-8 5-8-5V6l8 5 8-5v1.5Z"/>
+          </svg>
+          <span>Say hi!</span>
+        </a>
+
+      
     </div>
-    <!-- <div class="hero-art" aria-hidden="true"><div class="glow"></div></div> -->
   </main>
 
   <!-- ABOUT -->
-  <section id="about" class="section container">
-    <h3 class="section-title" data-reveal="fade"><span class="num">01.</span> About</h3>
-    <p data-reveal="up">
-      Business Analyst & QA specialist for ERP/WMS, DMS, and POS (SaaS). I blend
-      <strong>process mining</strong>, <strong>Python ML defect analytics</strong>,
-      and <strong>DORA + Monte Carlo</strong> delivery forecasting to ship predictable, high-quality releases.
-      Recent outcomes: ~25% faster release cycles, ~30% fewer defects, ~95% of issues resolved within SLA.
-    </p>
-    
+  <section id="about" class="section container about">
+    <h3 class="about-title" data-reveal="fade">
+      <span class="slash">/</span> about me <span class="rule" aria-hidden="true"></span>
+    </h3>
+
+    <div class="about-wrap" data-reveal="up">
+      <div class="about-copy">
+        <p>
+          I’m a <strong>Business Analyst & QA</strong> focused on ERP/WMS, DMS and POS (SaaS).
+          I use <strong>process mining</strong> to map reality, then tighten
+          <strong>acceptance criteria</strong> and <strong>DORA-driven forecasting</strong>
+          (Monte Carlo) so teams ship <em>predictable, high-quality</em> releases.
+          I also care a lot about <strong>Arabic RTL/i18n QA</strong> so interfaces actually read right.
+        </p>
+
+        <p>Here are some technologies I’ve been working with:</p>
+        <ul class="tech-list">
+          <li>BPMN 2.0 / UML</li>
+          <li>Process Mining</li>
+          <li>Python (pandas, scikit-learn)</li>
+          <li>SQL</li>
+          <li>Power BI / Tableau</li>
+          <li>Jira / Azure DevOps</li>
+          <li>Confluence</li>
+          <li>Git</li>
+          <li>Flutter / Angular (apps)</li>
+          <li>Arabic RTL / i18n QA</li>
+        </ul>
+
+        <p class="muted">
+          Outside work, I'm interested in following the developments of science. I also play a lot of video games and workout.
+        </p>
+      </div>
+
+      <!-- Photo -->
+      <div class="about-photo" data-reveal="right" data-reveal-delay="100">
+        <!-- swap the src to your image -->
+        <img src="assets/about-siwar.jpg" alt="Siwar Mhadhbi" width="420" height="420" loading="lazy">
+      </div>
+    </div>
   </section>
+
 
   <!-- EXPERIENCE -->
-  <section id="experience" class="section container">
-    <h3 class="section-title" data-reveal="fade"><span class="num">02.</span> Experience</h3>
+  <section id="experience" class="section container xp">
+    <h3 class="about-title" data-reveal="fade">
+      <span class="slash">/</span> experience <span class="rule" aria-hidden="true"></span>
+    </h3>
 
-    <ol class="timeline" aria-label="Experience timeline">
-      <li class="tl-item" data-reveal="right">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <header>
-            <h4>Business Analyst · ERP/WMS</h4>
-            <span class="meta">2023–2025 · SaaS</span>
-          </header>
-          <ul>
-            <li>BPMN as-is/to-be; acceptance criteria & RTM.</li>
-            <li>Process mining on P2P/O2C logs: variants & conformance.</li>
-            <li>DORA + Monte Carlo forecasting (P80/P95).</li>
+    <div class="xp-wrap" data-reveal="up">
+      <!-- LEFT: companies list -->
+      <ul class="xp-tabs" role="tablist" aria-label="Experience companies">
+        <span class="xp-indicator" aria-hidden="true"></span>
+        <li><button class="xp-tab is-active" id="tab-dmp"     data-brand="#A78BFA">Digital Minds Pro</button></li>  <!-- violet -->
+        <li><button class="xp-tab"          id="tab-thunder" data-brand="#F59E0B">Thunder</button></li>            <!-- amber -->
+        <li><button class="xp-tab"          id="tab-theta"   data-brand="#0EA5E9">Theta Technologies</button></li> <!-- sky -->
+        <li><button class="xp-tab"          id="tab-echo"    data-brand="#22C55E">Echo Technology</button></li>    <!-- green -->
+      </ul>
+
+
+      <!-- RIGHT: details -->
+      <div class="xp-panels">
+        <!-- Digital Minds Pro -->
+        <section class="xp-panel is-active" role="tabpanel" id="xp-dmp" aria-labelledby="tab-dmp" tabindex="0">
+          <h4>Business Analyst & QA <span class="at">@</span> <span class="company">Digital Minds Pro</span></h4>
+          <div class="meta">Jan 2023 – Jun 2025 · Amman, Jordan</div>
+          <ul class="bullets">
+            <li>Ran DMS requirements workshops; produced FRD/PRD and RTM with acceptance criteria aligned to measurable outcomes.</li>
+            <li>Mapped processes in Visio and removed redundancies, cutting operational inefficiencies by ~18%.</li>
+            <li>Planned & executed UAT; ~95% of defects resolved within SLA via clear repro steps and tight dev alignment.</li>
+            <li>Delivered in Agile & Waterfall (ceremonies, readiness checks, release notes, enablement).</li>
+            <li>Built Python notebooks to analyze UAT/production tickets and shipped Power BI/Tableau dashboards for defect drivers.</li>
+            <li>Throughput-based Monte Carlo + DORA metrics to predict UAT windows (P80/P95) and de-risk go-lives.</li>
+            <li>Defined RTL/bi-di acceptance criteria; reduced Arabic UI/layout defects across forms, tables, and PDFs.</li>
+            <li>Designed invoice data model & validation; researched GCC e-invoicing (KSA ZATCA Phase 2) and UAE timeline.</li>
           </ul>
-          <a class="text-link" href="cases/case-erp-wms.html">Case study →</a>
-        </div>
-      </li>
-      <li class="tl-item" data-reveal="right" data-reveal-delay="100">
-        <div class="tl-dot"></div>
-        <div class="tl-card">
-          <header>
-            <h4>POS QA & Readiness</h4>
-            <span class="meta">2022–2023 · Retail</span>
-          </header>
-          <ul>
-            <li>Regression packs; RTL/i18n checks; NLP-lite triage.</li>
+        </section>
+
+        <!-- Thunder -->
+        <section class="xp-panel" role="tabpanel" id="xp-thunder" aria-labelledby="tab-thunder" tabindex="0">
+          <h4>Business Analyst & POS Admin <span class="at">@</span> <span class="company">Thunder</span></h4>
+          <div class="meta">Jan 2025 – Present · Riyadh, KSA</div>
+          <ul class="bullets">
+            <li>Defined Admin Panel & POS requirements/flows; tightened acceptance criteria and test readiness, reducing POS defect backlog ~30% and speeding UAT ~25%.</li>
+            <li>Coordinated backlog grooming, priority fixes, and regression for smoother pilot/hypercare.</li>
+            <li>Defect prediction & clustering (pandas, scikit-learn) to flag high-risk modules pre-UAT.</li>
+            <li>NLP-lite ticket triage to suggest components/labels and detect duplicates; exported to Jira for review.</li>
+            <li>Release anomaly signals on build/test metrics (failed-test ratio, flaky-test rate, response-time drift).</li>
           </ul>
-          <a class="text-link" href="cases/case-pos-qa.html">Case study →</a>
-        </div>
-      </li>
-    </ol>
+        </section>
+
+        <!-- Theta -->
+        <section class="xp-panel" role="tabpanel" id="xp-theta" aria-labelledby="tab-theta" tabindex="0">
+          <h4>Full-Stack Developer <span class="at">@</span> <span class="company">Theta Technologies</span></h4>
+          <div class="meta">Mar 2025 – Jun 2025 · Amman, Jordan</div>
+          <ul class="bullets">
+            <li>Built a responsive travel-agency SPA (Angular + Bootstrap + Firebase) to boost content velocity and engagement.</li>
+          </ul>
+        </section>
+
+        <!-- Echo -->
+        <section class="xp-panel" role="tabpanel" id="xp-echo" aria-labelledby="tab-echo" tabindex="0">
+          <h4>Flutter Developer <span class="at">@</span> <span class="company">Echo Technology</span></h4>
+          <div class="meta">Feb 2025 – Jul 2025 · Amman, Jordan</div>
+          <ul class="bullets">
+            <li>Delivered a Flutter app for the Ministry of Awqaf & Islamic Affairs with Google Maps and offline capability; stabilized builds through iterative testing.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
   </section>
+
 
   <!-- PROJECTS -->
   <section id="work" class="section container work">
@@ -198,7 +271,6 @@
 
 
 
-<!-- keep these lightweight polyfills -->
 <script>
   window.process = window.process || { env: { NODE_ENV: 'production' } };
   window.global  = window.global  || window;
@@ -209,7 +281,6 @@
   import { mountSeaweed } from "./r3f-widget/dist/seaweed-widget.js";
 
   function boot() {
-    // try hero-3d first, then seaweed (handy while testing)
     const host =
       document.getElementById("hero-3d") ||
       document.getElementById("seaweed");
@@ -227,8 +298,6 @@
     console.log("Mounting Seaweed into:", host.id, "bg:", bg);
     mountSeaweed(host, {
       height: 380,
-      // NOTE: your current widget build only reads `height` (it ignores background/scale/camera),
-      // so it's fine to pass them, but they won't change anything until you wire them in.
       background: bg,
       scale: 0.82,
       offsetY: -0.06,

@@ -146,9 +146,134 @@
     initSmoothAnchorsAndFocus();
     initScrollSpy();
     initRevealOnScroll();
+    initExperienceTabs();
 
     // Footer year
     const y = document.getElementById('year');
     if (y) y.textContent = new Date().getFullYear();
   });
+  
+  
+  
+ function initExperienceTabs() {
+  const tabs   = Array.from(document.querySelectorAll('.xp-tab'));
+  const panels = Array.from(document.querySelectorAll('.xp-panel'));
+  const list   = document.querySelector('.xp-tabs');
+  const ink    = list ? list.querySelector('.xp-indicator') : null;
+  const section = document.querySelector('.xp');
+  if (!tabs.length || !panels.length || !list || !ink) return;
+
+  const idFromTab  = (btn) => btn.id.replace(/^tab-/, '');
+  const isVertical = () => window.matchMedia('(min-width: 981px)').matches;
+
+  /* ---- ink bar placement ---- */
+  function moveInkTo(btn){
+    const rBtn  = btn.getBoundingClientRect();
+    const rList = list.getBoundingClientRect();
+
+    if (isVertical()) {
+      // vertical list: bar slides along Y and matches button height
+      ink.style.height    = rBtn.height + 'px';
+      ink.style.width     = '2px';
+      ink.style.transform = `translateY(${btn.offsetTop}px)`;
+    } else {
+      // horizontal on mobile: bar slides along X and matches button width
+      const left = rBtn.left - rList.left + list.scrollLeft;
+      ink.style.width     = rBtn.width + 'px';
+      ink.style.height    = '2px';
+      ink.style.transform = `translateX(${left}px)`;
+    }
+  }
+  // apply the brand color from the active tab
+  function applyBrandFrom(btn){
+    const brand = (btn && btn.dataset.brand || '').trim();
+    const fallback = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#DFD0B8';
+    section.style.setProperty('--xp-accent', brand || fallback);
+  }
+  /* ---- staggered reveal for bullets in active panel ---- */
+  function revealBullets(panel){
+    // reset any previous state
+    panels.forEach(p =>
+      p.querySelectorAll('.bullets li').forEach(li => {
+        li.classList.remove('in');
+        li.style.transitionDelay = '';
+      })
+    );
+    const items = Array.from(panel.querySelectorAll('.bullets li'));
+    items.forEach((li, i) => {
+      li.style.transitionDelay = (i * 80) + 'ms'; // 80ms step; tune as desired
+      requestAnimationFrame(() => li.classList.add('in'));
+    });
+  }
+
+  /* ---- activate tab + panel ---- */
+  function activate(id){
+    tabs.forEach(t => {
+      const active = idFromTab(t) === id;
+      t.classList.toggle('is-active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
+      t.tabIndex = active ? 0 : -1;
+      if (active) moveInkTo(t);
+    });
+
+    let activePanel = null;
+    panels.forEach(p => {
+      const on = p.id === 'xp-' + id;
+      p.classList.toggle('is-active', on);
+      if (on) activePanel = p;
+    });
+    
+    if (activePanel) revealBullets(activePanel);
+    if (activeBtn) applyBrandFrom(activeBtn);
+  }
+
+  /* ---- ripple feedback on press ---- */
+  function attachRipple(btn){
+    btn.addEventListener('pointerdown', (e) => {
+      const rect = btn.getBoundingClientRect();
+      btn.style.setProperty('--rx', (e.clientX - rect.left) + 'px');
+      btn.style.setProperty('--ry', (e.clientY - rect.top)  + 'px');
+      btn.classList.add('is-pressed');
+      setTimeout(() => btn.classList.remove('is-pressed'), 420);
+    }, { passive: true });
+  }
+
+  /* ---- wire up tabs ---- */
+  tabs.forEach(btn => {
+    attachRipple(btn);
+
+    btn.addEventListener('click', () => activate(idFromTab(btn)));
+
+    // keyboard navigation
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        const i = (tabs.indexOf(btn) + 1) % tabs.length;
+        tabs[i].focus(); tabs[i].click();
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const i = (tabs.indexOf(btn) - 1 + tabs.length) % tabs.length;
+        tabs[i].focus(); tabs[i].click();
+      }
+    });
+  });
+
+  /* ---- initial state (supports #experience=company) ---- */
+  const m = location.hash && location.hash.match(/experience=([\w-]+)/);
+  const first = tabs.find(t => t.classList.contains('is-active')) || tabs[0];
+  activate(m ? m[1] : idFromTab(first));
+
+  /* ---- keep ink aligned on resize/scroll ---- */
+  const align = () => {
+    const active = tabs.find(t => t.classList.contains('is-active'));
+    if (active) moveInkTo(active);
+  };
+  window.addEventListener('resize', () => requestAnimationFrame(align));
+  list.addEventListener('scroll', () => requestAnimationFrame(align));
+}
+
+
+  
 })();
+
+
