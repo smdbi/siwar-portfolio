@@ -212,48 +212,143 @@
 
 
   <!-- PROJECTS -->
-  <section id="work" class="section container work">
-    <h3 class="section-title" data-reveal="fade"><span class="num">03.</span> Projects</h3>
-    <p class="muted" data-reveal="fade">Redacted artifacts with synthetic data; full materials available during interviews.</p>
+<section id="work" class="section container projects">
+  <h3 class="about-title" data-reveal="fade">
+      <span class="slash">/</span> projects <span class="rule" aria-hidden="true"></span>
+    </h3>
 
-    <div class="grid">
-      <a class="card" href="cases/case-erp-wms.html" data-reveal="up">
-        <img src="assets/erp-wms.svg" alt="ERP WMS — Process Mining" />
-        <div class="card-body">
-          <h3>ERP WMS — Process Mining</h3>
-          <p>Variant & conformance checks on P2P/O2C event logs to surface bottlenecks; informed backlog and release criteria.</p>
-          <ul class="tags"><li>Process Mining</li><li>BPMN</li><li>ERP</li></ul>
-        </div>
-      </a>
+  <!-- Featured carousel (uses initProjectsCarousel + .proj-* CSS you added) -->
+  <div class="proj-hero" data-reveal="up">
+    <button class="proj-nav prev" aria-label="Previous project">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
 
-      <a class="card" href="cases/case-dms-forecasting.html" data-reveal="up" data-reveal-delay="120">
-        <img src="assets/dms-forecast.svg" alt="DMS — Monte Carlo & DORA" />
-        <div class="card-body">
-          <h3>DMS — Monte Carlo & DORA</h3>
-          <p>Throughput-based Monte Carlo tied to DORA metrics to predict UAT windows (P80/P95) and de-risk go-lives.</p>
-          <ul class="tags"><li>Monte Carlo</li><li>DORA</li><li>Analytics</li></ul>
+    <div class="proj-track">
+      <!-- Slide 1: ERP WMS -->
+      <article class="proj-slide is-active" id="slide-erp">
+        <img src="assets/erp-wms.svg" alt="ERP WMS — Process Mining">
+        <div class="overlay">
+          <h4 class="title">ERP WMS — Process Mining</h4>
+          <p class="blurb">Variant &amp; conformance checks on P2P/O2C event logs to surface bottlenecks; informed backlog and release criteria.</p>
+          <ul class="chips"><li>Process Mining</li><li>BPMN</li><li>ERP</li></ul>
+          <div class="links">
+            <a href="cases/case-erp-wms.html" aria-label="Open case study">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path fill="currentColor" d="M5 5h5V3H3v7h2z"/></svg>
+            </a>
+          </div>
         </div>
-      </a>
+      </article>
 
-      <a class="card" href="cases/case-pos-qa.html" data-reveal="up" data-reveal-delay="180">
-        <img src="assets/pos-qa.svg" alt="POS — Quality & Readiness" />
-        <div class="card-body">
-          <h3>POS — Quality & Readiness</h3>
-          <p>Tightened acceptance criteria and regression packs; NLP-lite triage to dedupe and route tickets.</p>
-          <ul class="tags"><li>QA</li><li>NLP-lite</li><li>POS</li></ul>
+      <!-- Slide 2: DMS Forecasting -->
+      <article class="proj-slide" id="slide-dms">
+        <img src="assets/dms-forecast.svg" alt="DMS — Monte Carlo & DORA">
+        <div class="overlay">
+          <h4 class="title">DMS — Monte Carlo &amp; DORA</h4>
+          <p class="blurb">Throughput-based Monte Carlo tied to DORA metrics to predict UAT windows (P80/P95) and de-risk go-lives.</p>
+          <ul class="chips"><li>Monte Carlo</li><li>DORA</li><li>Analytics</li></ul>
+          <div class="links">
+            <a href="cases/case-dms-forecasting.html" aria-label="Open case study">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path fill="currentColor" d="M5 5h5V3H3v7h2z"/></svg>
+            </a>
+          </div>
         </div>
-      </a>
+      </article>
 
-      <a class="card" href="cases/case-rtl-bidi.html" data-reveal="up" data-reveal-delay="220">
-        <img src="assets/rtl-bidi.svg" alt="Arabic RTL/bi-di QA" />
-        <div class="card-body">
-          <h3>Arabic RTL/bi-di QA</h3>
-          <p>Embedded RTL/bi-di acceptance criteria (dir, mirroring, numerals) into specs & tests; reduced Arabic UI/layout defects.</p>
-          <ul class="tags"><li>RTL</li><li>i18n</li><li>QA</li></ul>
+      <!-- Slide 3: POS QA -->
+      <article class="proj-slide" id="slide-pos">
+        <img src="assets/pos-qa.svg" alt="POS — Quality & Readiness">
+        <div class="overlay">
+          <h4 class="title">POS — Quality &amp; Readiness</h4>
+          <p class="blurb">Tightened acceptance criteria and regression packs; NLP-lite triage to dedupe and route tickets.</p>
+          <ul class="chips"><li>QA</li><li>NLP-lite</li><li>POS</li></ul>
+          <div class="links">
+            <a href="cases/case-pos-qa.html" aria-label="Open case study">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path fill="currentColor" d="M5 5h5V3H3v7h2z"/></svg>
+            </a>
+          </div>
         </div>
-      </a>
+      </article>
     </div>
-  </section>
+
+    <button class="proj-nav next" aria-label="Next project">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m8.59 16.59 1.41 1.41 6-6-6-6-1.41 1.41L12.17 12z"/></svg>
+    </button>
+
+    <div class="proj-dots" role="tablist" aria-label="Featured projects">
+      <button class="dot is-active" role="tab" aria-selected="true" aria-controls="slide-erp"></button>
+      <button class="dot" role="tab" aria-controls="slide-dms"></button>
+      <button class="dot" role="tab" aria-controls="slide-pos"></button>
+    </div>
+  </div>
+
+  <!-- Project cards -->
+  <div class="proj-grid" data-reveal="up">
+    <article class="p-card">
+      <header class="p-head">
+        <span class="p-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-6-4h-6z"/></svg>
+        </span>
+        <div class="p-actions">
+          <a href="cases/case-erp-wms.html" title="Open case" aria-label="Open case">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path fill="currentColor" d="M5 5h5V3H3v7h2z"/></svg>
+          </a>
+        </div>
+      </header>
+      <h4 class="p-title"><a href="cases/case-erp-wms.html">ERP WMS — Process Mining</a></h4>
+      <p class="p-desc">Variant &amp; conformance checks on P2P/O2C event logs to surface bottlenecks; informed backlog and release criteria.</p>
+      <div class="p-tech">Process Mining · BPMN · ERP</div>
+    </article>
+
+    <article class="p-card">
+      <header class="p-head">
+        <span class="p-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-6-4h-6z"/></svg>
+        </span>
+        <div class="p-actions">
+          <a href="cases/case-dms-forecasting.html" title="Open case" aria-label="Open case">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path fill="currentColor" d="M5 5h5V3H3v7h2z"/></svg>
+          </a>
+        </div>
+      </header>
+      <h4 class="p-title"><a href="cases/case-dms-forecasting.html">DMS — Monte Carlo &amp; DORA</a></h4>
+      <p class="p-desc">Throughput-based Monte Carlo tied to DORA metrics to predict UAT windows (P80/P95) and de-risk go-lives.</p>
+      <div class="p-tech">Monte Carlo · DORA · Analytics</div>
+    </article>
+
+    <article class="p-card">
+      <header class="p-head">
+        <span class="p-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-6-4h-6z"/></svg>
+        </span>
+        <div class="p-actions">
+          <a href="cases/case-pos-qa.html" title="Open case" aria-label="Open case">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path fill="currentColor" d="M5 5h5V3H3v7h2z"/></svg>
+          </a>
+        </div>
+      </header>
+      <h4 class="p-title"><a href="cases/case-pos-qa.html">POS — Quality &amp; Readiness</a></h4>
+      <p class="p-desc">Tightened acceptance criteria and regression packs; NLP-lite triage to dedupe and route tickets.</p>
+      <div class="p-tech">QA · NLP-lite · POS</div>
+    </article>
+
+    <article class="p-card">
+      <header class="p-head">
+        <span class="p-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-6-4h-6z"/></svg>
+        </span>
+        <div class="p-actions">
+          <a href="cases/case-rtl-bidi.html" title="Open case" aria-label="Open case">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path fill="currentColor" d="M5 5h5V3H3v7h2z"/></svg>
+          </a>
+        </div>
+      </header>
+      <h4 class="p-title"><a href="cases/case-rtl-bidi.html">Arabic RTL/bi-di QA</a></h4>
+      <p class="p-desc">Embedded RTL/bi-di acceptance criteria (dir, mirroring, numerals) into specs &amp; tests; reduced Arabic UI/layout defects.</p>
+      <div class="p-tech">RTL · i18n · QA</div>
+    </article>
+  </div>
+</section>
+
 
   <!-- CONTACT -->
   <section id="contact" class="section container contact">

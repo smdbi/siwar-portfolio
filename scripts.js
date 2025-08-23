@@ -42,12 +42,10 @@
         if (!target) return;
 
         e.preventDefault();
-        // Make sure the target can be focused programmatically
         if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Move focus after the scroll to help keyboard/screen reader users
         setTimeout(() => target.focus({ preventScroll: true }), 300);
-        history.replaceState(null, '', href); // keep URL hash in sync
+        history.replaceState(null, '', href);
       });
     });
   }
@@ -73,7 +71,6 @@
       if (el) el.classList.add('is-active');
     };
 
-    // IntersectionObserver for sections
     if ('IntersectionObserver' in window) {
       const spy = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -87,11 +84,9 @@
       });
     }
 
-    // Set initial active state on load (before IO fires)
     const initial = (location.hash && ids.includes(location.hash)) ? location.hash : '#home';
     setActive(initial);
 
-    // Also respond to manual hash changes (e.g., user edits URL)
     window.addEventListener('hashchange', () => {
       const h = (location.hash && ids.includes(location.hash)) ? location.hash : '#home';
       setActive(h);
@@ -102,7 +97,6 @@
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const nodes = document.querySelectorAll('[data-reveal]');
 
-    // Reduced motion or no IO support → reveal immediately
     if (reduce || !('IntersectionObserver' in window)) {
       nodes.forEach(el => el.classList.add('is-in'));
       return;
@@ -119,12 +113,216 @@
 
     nodes.forEach(el => ro.observe(el));
 
-    // Optional: re-run once after layout settles (images, fonts)
     setTimeout(() => {
       document.querySelectorAll('[data-reveal]:not(.is-in)').forEach(el => ro.observe(el));
     }, 300);
   }
 
+  // -----------------------
+  // EXPERIENCE: tabs/ink/brand color + bullet reveal
+  // -----------------------
+  function initExperienceTabs() {
+    const tabs   = Array.from(document.querySelectorAll('.xp-tab'));
+    const panels = Array.from(document.querySelectorAll('.xp-panel'));
+    const list   = document.querySelector('.xp-tabs');
+    const ink    = list ? list.querySelector('.xp-indicator') : null;
+    const section = document.querySelector('.xp');
+    if (!tabs.length || !panels.length || !list || !ink || !section) return;
+
+    const idFromTab  = (btn) => btn.id.replace(/^tab-/, '');
+    const isVertical = () => window.matchMedia('(min-width: 981px)').matches;
+
+    function moveInkTo(btn){
+      const rBtn  = btn.getBoundingClientRect();
+      const rList = list.getBoundingClientRect();
+      if (isVertical()) {
+        ink.style.height    = rBtn.height + 'px';
+        ink.style.width     = '2px';
+        ink.style.transform = `translateY(${btn.offsetTop}px)`;
+      } else {
+        const left = rBtn.left - rList.left + list.scrollLeft;
+        ink.style.width     = rBtn.width + 'px';
+        ink.style.height    = '2px';
+        ink.style.transform = `translateX(${left}px)`;
+      }
+    }
+
+    function applyBrandFrom(btn){
+      const brand = (btn && btn.dataset.brand || '').trim();
+      const fallback = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#DFD0B8';
+      section.style.setProperty('--xp-accent', brand || fallback);
+    }
+
+    function revealBullets(panel){
+      panels.forEach(p =>
+        p.querySelectorAll('.bullets li').forEach(li => {
+          li.classList.remove('in');
+          li.style.transitionDelay = '';
+        })
+      );
+      const items = Array.from(panel.querySelectorAll('.bullets li'));
+      items.forEach((li, i) => {
+        li.style.transitionDelay = (i * 80) + 'ms';
+        requestAnimationFrame(() => li.classList.add('in'));
+      });
+    }
+
+    function activate(id){
+      const activeBtn = tabs.find(t => idFromTab(t) === id);  // define it!
+
+      tabs.forEach(t => {
+        const on = idFromTab(t) === id;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        if (on) moveInkTo(t);
+      });
+
+      let activePanel = null;
+      panels.forEach(p => {
+        const on = p.id === 'xp-' + id;
+        p.classList.toggle('is-active', on);
+        if (on) activePanel = p;
+      });
+
+      if (activePanel) revealBullets(activePanel);
+      applyBrandFrom(activeBtn);
+    }
+
+    function attachRipple(btn){
+      btn.addEventListener('pointerdown', (e) => {
+        const rect = btn.getBoundingClientRect();
+        btn.style.setProperty('--rx', (e.clientX - rect.left) + 'px');
+        btn.style.setProperty('--ry', (e.clientY - rect.top)  + 'px');
+        btn.classList.add('is-pressed');
+        setTimeout(() => btn.classList.remove('is-pressed'), 420);
+      }, { passive: true });
+    }
+
+    tabs.forEach(btn => {
+      attachRipple(btn);
+      btn.addEventListener('click', () => activate(idFromTab(btn)));
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          const i = (tabs.indexOf(btn) + 1) % tabs.length;
+          tabs[i].focus(); tabs[i].click();
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const i = (tabs.indexOf(btn) - 1 + tabs.length) % tabs.length;
+          tabs[i].focus(); tabs[i].click();
+        }
+      });
+    });
+
+    const m = location.hash && location.hash.match(/experience=([\w-]+)/);
+    const first = tabs.find(t => t.classList.contains('is-active')) || tabs[0];
+    activate(m ? m[1] : idFromTab(first));
+
+    const align = () => {
+      const active = tabs.find(t => t.classList.contains('is-active'));
+      if (active) moveInkTo(active);
+    };
+    window.addEventListener('resize', () => requestAnimationFrame(align));
+    list.addEventListener('scroll', () => requestAnimationFrame(align));
+  }
+
+  // -----------------------
+  // PROJECTS: featured carousel
+  // -----------------------
+  function initProjectsCarousel(){
+    const hero = document.querySelector('.proj-hero');
+    if (!hero) return;
+
+    const slides   = Array.from(hero.querySelectorAll('.proj-slide'));
+    const dotsWrap = hero.querySelector('.proj-dots');
+    let dots       = Array.from(hero.querySelectorAll('.proj-dots .dot'));
+    const prev     = hero.querySelector('.proj-nav.prev');
+    const next     = hero.querySelector('.proj-nav.next');
+
+    if (!slides.length) return;
+
+    // Ensure hero can receive keyboard events
+    if (!hero.hasAttribute('tabindex')) hero.setAttribute('tabindex','0');
+
+    // Create dots if missing
+    if (dotsWrap && dots.length === 0) {
+      slides.forEach((s, k) => {
+        const b = document.createElement('button');
+        b.className = 'dot' + (k === 0 ? ' is-active' : '');
+        b.setAttribute('role', 'tab');
+        if (!s.id) s.id = `slide-${k+1}`;
+        b.setAttribute('aria-controls', s.id);
+        dotsWrap.appendChild(b);
+      });
+      dots = Array.from(hero.querySelectorAll('.proj-dots .dot'));
+    }
+
+    let i = Math.max(0, slides.findIndex(s => s.classList.contains('is-active')));
+
+    function show(n){
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => s.classList.toggle('is-active', k === i));
+      dots.forEach((d, k) => {
+        const on = k === i;
+        d.classList.toggle('is-active', on);
+        d.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+    }
+
+    prev && prev.addEventListener('click', () => show(i - 1));
+    next && next.addEventListener('click', () => show(i + 1));
+    dots.forEach((d, k) => d.addEventListener('click', () => show(k)));
+
+    // Keyboard + swipe
+    hero.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft')  show(i - 1);
+      if (e.key === 'ArrowRight') show(i + 1);
+    });
+    let x0 = null;
+    hero.addEventListener('pointerdown', e => x0 = e.clientX, { passive:true });
+    hero.addEventListener('pointerup',   e => {
+      if (x0 == null) return;
+      const dx = e.clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
+    }, { passive:true });
+
+    // Autoplay 6s, pause on hover/focus
+    let t = null;
+    const start = () => (t = setInterval(() => show(i + 1), 6000));
+    const stop  = () => (t && clearInterval(t), t = null);
+    hero.addEventListener('mouseenter', stop);
+    hero.addEventListener('mouseleave', start);
+    hero.addEventListener('focusin', stop);
+    hero.addEventListener('focusout', start);
+
+    show(i || 0);
+    start();
+  }
+
+  // -----------------------
+  // HERO WIDGET (optional, safe if file missing)
+  // -----------------------
+  function initSeaweedWidget() {
+    const host = document.getElementById('hero-3d') || document.getElementById('seaweed');
+    if (!host) return;
+
+    const spec = new URL('./r3f-widget/dist/seaweed-widget.js', document.baseURI).href;
+
+    import(spec)
+      .then(({ mountSeaweed }) => {
+        const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#222831';
+        mountSeaweed(host, { height: host.clientHeight || 380, background: bg });
+        console.log('[seaweed] mounted into #' + host.id);
+      })
+      .catch((err) => {
+        console.error('[seaweed] import failed:', err);
+      });
+  }
+
+  // -----------------------
+  // BOOT
+  // -----------------------
   document.addEventListener('DOMContentLoaded', () => {
     // Theme
     initTheme();
@@ -147,133 +345,11 @@
     initScrollSpy();
     initRevealOnScroll();
     initExperienceTabs();
+    initProjectsCarousel();
+    initSeaweedWidget(); // safe if not present
 
     // Footer year
     const y = document.getElementById('year');
     if (y) y.textContent = new Date().getFullYear();
   });
-  
-  
-  
- function initExperienceTabs() {
-  const tabs   = Array.from(document.querySelectorAll('.xp-tab'));
-  const panels = Array.from(document.querySelectorAll('.xp-panel'));
-  const list   = document.querySelector('.xp-tabs');
-  const ink    = list ? list.querySelector('.xp-indicator') : null;
-  const section = document.querySelector('.xp');
-  if (!tabs.length || !panels.length || !list || !ink) return;
-
-  const idFromTab  = (btn) => btn.id.replace(/^tab-/, '');
-  const isVertical = () => window.matchMedia('(min-width: 981px)').matches;
-
-  /* ---- ink bar placement ---- */
-  function moveInkTo(btn){
-    const rBtn  = btn.getBoundingClientRect();
-    const rList = list.getBoundingClientRect();
-
-    if (isVertical()) {
-      // vertical list: bar slides along Y and matches button height
-      ink.style.height    = rBtn.height + 'px';
-      ink.style.width     = '2px';
-      ink.style.transform = `translateY(${btn.offsetTop}px)`;
-    } else {
-      // horizontal on mobile: bar slides along X and matches button width
-      const left = rBtn.left - rList.left + list.scrollLeft;
-      ink.style.width     = rBtn.width + 'px';
-      ink.style.height    = '2px';
-      ink.style.transform = `translateX(${left}px)`;
-    }
-  }
-  // apply the brand color from the active tab
-  function applyBrandFrom(btn){
-    const brand = (btn && btn.dataset.brand || '').trim();
-    const fallback = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#DFD0B8';
-    section.style.setProperty('--xp-accent', brand || fallback);
-  }
-  /* ---- staggered reveal for bullets in active panel ---- */
-  function revealBullets(panel){
-    // reset any previous state
-    panels.forEach(p =>
-      p.querySelectorAll('.bullets li').forEach(li => {
-        li.classList.remove('in');
-        li.style.transitionDelay = '';
-      })
-    );
-    const items = Array.from(panel.querySelectorAll('.bullets li'));
-    items.forEach((li, i) => {
-      li.style.transitionDelay = (i * 80) + 'ms'; // 80ms step; tune as desired
-      requestAnimationFrame(() => li.classList.add('in'));
-    });
-  }
-
-  /* ---- activate tab + panel ---- */
-  function activate(id){
-    tabs.forEach(t => {
-      const active = idFromTab(t) === id;
-      t.classList.toggle('is-active', active);
-      t.setAttribute('aria-selected', active ? 'true' : 'false');
-      t.tabIndex = active ? 0 : -1;
-      if (active) moveInkTo(t);
-    });
-
-    let activePanel = null;
-    panels.forEach(p => {
-      const on = p.id === 'xp-' + id;
-      p.classList.toggle('is-active', on);
-      if (on) activePanel = p;
-    });
-    
-    if (activePanel) revealBullets(activePanel);
-    if (activeBtn) applyBrandFrom(activeBtn);
-  }
-
-  /* ---- ripple feedback on press ---- */
-  function attachRipple(btn){
-    btn.addEventListener('pointerdown', (e) => {
-      const rect = btn.getBoundingClientRect();
-      btn.style.setProperty('--rx', (e.clientX - rect.left) + 'px');
-      btn.style.setProperty('--ry', (e.clientY - rect.top)  + 'px');
-      btn.classList.add('is-pressed');
-      setTimeout(() => btn.classList.remove('is-pressed'), 420);
-    }, { passive: true });
-  }
-
-  /* ---- wire up tabs ---- */
-  tabs.forEach(btn => {
-    attachRipple(btn);
-
-    btn.addEventListener('click', () => activate(idFromTab(btn)));
-
-    // keyboard navigation
-    btn.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-        e.preventDefault();
-        const i = (tabs.indexOf(btn) + 1) % tabs.length;
-        tabs[i].focus(); tabs[i].click();
-      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-        e.preventDefault();
-        const i = (tabs.indexOf(btn) - 1 + tabs.length) % tabs.length;
-        tabs[i].focus(); tabs[i].click();
-      }
-    });
-  });
-
-  /* ---- initial state (supports #experience=company) ---- */
-  const m = location.hash && location.hash.match(/experience=([\w-]+)/);
-  const first = tabs.find(t => t.classList.contains('is-active')) || tabs[0];
-  activate(m ? m[1] : idFromTab(first));
-
-  /* ---- keep ink aligned on resize/scroll ---- */
-  const align = () => {
-    const active = tabs.find(t => t.classList.contains('is-active'));
-    if (active) moveInkTo(active);
-  };
-  window.addEventListener('resize', () => requestAnimationFrame(align));
-  list.addEventListener('scroll', () => requestAnimationFrame(align));
-}
-
-
-  
 })();
-
-
